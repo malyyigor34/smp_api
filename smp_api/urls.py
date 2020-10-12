@@ -5,5 +5,5 @@ from .views import UrlHandler
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    path(r'<str:url>/', UrlHandler.as_view())
+    path(r'', UrlHandler.as_view())
 ]

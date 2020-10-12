@@ -46,7 +46,8 @@ def get_twitter_keys():
 
 
 class UrlHandler(APIView):
-    def get(self, request, url):
+    def get(self, request):
+        url = request.GET.get('domain')
         response = {'error': False, 'cached': False}
         data = None
         try:

@@ -5,6 +5,7 @@ import os
 import zipfile
 from .Exceptions import InvalidUrl
 
+
 class Browser():
     def __init__(self, login: str = None, password: str = None, ip: str = None, port: str = None):
         chrome_options = Options()
@@ -82,7 +83,7 @@ class Browser():
             chrome_options.add_extension(pluginfile)
         self.driver = webdriver.Chrome('smp_api/chromedriver', chrome_options=chrome_options)
 
-    def get_page(self, url:str):
+    def get_page(self, url: str):
         if not url.startswith('https://') or not url.startswith('http://'):
             url = 'https://'+url
         try:
