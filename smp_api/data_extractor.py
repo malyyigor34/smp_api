@@ -34,7 +34,7 @@ def get_data(url, twitters_keys):
     metadata = get_metadata(page_source)
     try:
         metadata['page']['logo'] = extruct.extract(page_source).get('json-ld', [])[0].get('logo')
-    except AttributeError:
+    except IndexError:
         metadata['page']['logo'] = None
     links = get_links(page_source)
     twitter_data = get_twitter_data(links.get('twitter.com'), twitters_keys)
