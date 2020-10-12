@@ -84,7 +84,7 @@ class Browser():
         self.driver = webdriver.Chrome('smp_api/chromedriver', chrome_options=chrome_options)
 
     def get_page(self, url: str):
-        if not url.startswith('https://') or not url.startswith('http://'):
+        if url.find('https') == -1 and url.find('http') ==-1:
             url = 'https://'+url
         try:
             self.driver.get(url)

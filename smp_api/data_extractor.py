@@ -3,11 +3,13 @@ from html_to_etree import parse_html_bytes
 from .browser import Browser
 import metadata_parser
 from .twitter_handler import get_twitter_data
-
+import time
+import extruct
 
 def get_page(url):
     browser = Browser()
     res = browser.get_page(url)
+    browser.driver.save_screenshot('1.png')
     return res
 
 
@@ -30,8 +32,13 @@ def get_metadata(res):
 def get_data(url, twitters_keys):
     page_source = get_page(url)
     metadata = get_metadata(page_source)
+    try:
+        metadata['page']['logo'] = extruct.extract(page_source).get('json-ld', [])[0].get('logo')
+    except AttributeError:
+        metadata['page']['logo'] = None
     links = get_links(page_source)
     twitter_data = get_twitter_data(links.get('twitter.com'), twitters_keys)
+
 
     return {
         'metadata': metadata,

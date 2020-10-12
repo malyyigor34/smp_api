@@ -22,6 +22,7 @@ def upload_image(key, value):
         return url
     return value
 
+
 def auth(consumer_key, consumer_secret, access_token_secret,
                  access_token_key):
     try:
@@ -54,7 +55,7 @@ def get_twitter_data(twitter_url, twitters_keys):
                 user = api.GetUser(user_id=twitter_url)
             except TwitterError:
                 user = None
-        fields = ['followers_count', 'profile_image_url_https', 'profile_banner_url_https', 'profile_background_image_url_https',
+        fields = ['name', 'description', 'followers_count', 'profile_image_url_https', 'profile_banner_url_https', 'profile_background_image_url_https',
                   'followers_count', 'friends_count', 'location']
 
         profile_details = {}
@@ -67,12 +68,3 @@ def get_twitter_data(twitter_url, twitters_keys):
         return profile_details
 
 
-#def upload_image(value):
-#    if value.find('')
-
-#get_twitter_data('https://twitter.com/AgataBlack1', [{
-#    'consumer_secret': 'Lewou1qwAklSLj5i3iO9ij5NdpKyjPvQ0TKKW8Orvgq4R0kAvT',
-#    'consumer_key': 'TG4OgtxtXDz6EZ4iJHXZXb0rk',
-#    'access_token_secret': '447sYo6nnjrUuV4Ivj4eYApU9orHQxJRxFsGDh82ncJAa',
-#    'access_token_key': '963002008188915713-t2VZgM0Jfa7zGAQNY9xdNMfT3ZxlyBH'
-#}])
