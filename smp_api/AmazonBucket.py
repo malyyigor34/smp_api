@@ -29,19 +29,21 @@ def upload_file(file_name, bucket, object_name=None):
 
 
 def upload_image(key, value, request_inst=None):
-    if key.find('_url') != -1:
-        with tempfile.NamedTemporaryFile(delete=False) as temp:
-            if request_inst and request_inst.status_code == 200:
-                temp.write(request_inst.content)
-            else:
-                response = requests.get(value)
-                if response.status_code != 200:
-                    return None
-                temp.write(response.content)
-                temp.write(requests.get(value).content)
-            temp.flush()
-            object_name = f'{random.randint(0,9999999)}.png'
-            url = upload_file(temp.name, os.environ.get('BUCKET_NAME'), object_name)
-            return url
-    return value
+    try:
+        if key.find('_url') != -1:
+            with tempfile.NamedTemporaryFile(delete=False) as temp:
+                if request_inst and request_inst.status_code == 200:
+                    temp.write(request_inst.content)
+                else:
+                    response = requests.get(value)
+                    if response.status_code != 200:
+                        return None
+                    temp.write(response.content)
+                    temp.write(requests.get(value).content)
+                temp.flush()
+                object_name = f'{random.randint(0,9999999)}.png'
+                url = upload_file(temp.name, os.environ.get('BUCKET_NAME'), object_name)
+                return url
+    except Exception:
+        return value
 
