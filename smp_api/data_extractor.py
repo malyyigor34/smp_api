@@ -42,7 +42,9 @@ def get_data(url, twitters_keys):
     page_source = get_page(url)
     metadata = get_metadata(page_source)
     try:
-        metadata['page']['logo'] = extruct.extract(page_source).get('json-ld', [])[0].get('logo')
+        metadata['page']['logo'] = extruct.extract(page_source).get('json-ld')[0].get('logo')
+        if not metadata['page']['logo']:
+            raise Exception
     except Exception:
         try:
             metadata['page']['logo'] = get_logo(url)

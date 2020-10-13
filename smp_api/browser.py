@@ -4,7 +4,6 @@ from selenium.common.exceptions import WebDriverException
 import os
 import zipfile
 from .Exceptions import InvalidUrl
-from pyvirtualdisplay import Display
 
 
 class Browser():
