@@ -1,26 +1,10 @@
 from twitter import Api
 from twitter.error import *
-from .AmazonBucket import upload_file
-import requests
-import os
-import tempfile
-import random
-
+from .AmazonBucket import upload_file, upload_image
 
 def get_twitter_name(url):
     if url.find('twitter.com') != -1:
         return url.split('/')[-1]
-
-
-def upload_image(key, value):
-    if key.find('_url') != -1:
-        with tempfile.NamedTemporaryFile(delete=False) as temp:
-            temp.write(requests.get(value).content)
-            temp.flush()
-            object_name = f'{random.randint(0,9999999)}.png'
-            url = upload_file(temp.name, 'twitterimagies', object_name)
-        return url
-    return value
 
 
 def auth(consumer_key, consumer_secret, access_token_secret,

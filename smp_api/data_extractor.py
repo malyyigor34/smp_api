@@ -5,6 +5,8 @@ import metadata_parser
 from .twitter_handler import get_twitter_data
 import time
 import extruct
+from .facebook_handler import get_facebook_data
+from .ClearbitApi import get_logo
 
 def get_page(url):
     browser = Browser()
@@ -34,18 +36,22 @@ def get_data(url, twitters_keys):
     metadata = get_metadata(page_source)
     try:
         metadata['page']['logo'] = extruct.extract(page_source).get('json-ld', [])[0].get('logo')
-    except IndexError:
-        metadata['page']['logo'] = None
+    except Exception:
+        try:
+            metadata['page']['logo'] = get_logo(url)
+        except Exception:
+            metadata['page']['logo'] = None
+
     links = get_links(page_source)
     twitter_data = get_twitter_data(links.get('twitter.com'), twitters_keys)
-
-
+    facebook_data = get_facebook_data(links.get('facebook.com'))
     return {
         'metadata': metadata,
         'links': links,
         'social':
         {
-            'twitter': twitter_data
+            'twitter': twitter_data,
+            'facebook': facebook_data
         }
     }
 
