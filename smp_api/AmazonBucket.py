@@ -46,4 +46,4 @@ def upload_image(key, value, request_inst=None):
                 return url
     except Exception:
         return value
-
+    return value

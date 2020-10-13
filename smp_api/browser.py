@@ -3,15 +3,18 @@ from selenium.webdriver.chrome.options import Options, DesiredCapabilities
 from selenium.common.exceptions import WebDriverException
 import os
 import zipfile
-try:
-    from .Exceptions import InvalidUrl
-except ImportError:
-    from Exceptions import InvalidUrl
+from .Exceptions import InvalidUrl
+from pyvirtualdisplay import Display
 
 
 class Browser():
     def __init__(self, login: str = None, password: str = None, ip: str = None, port: str = None,
-                 js_status=True):
+                 js_status=True, **kwargs):
+
+        #display = Display(visible=0, size=(1920, 1080))
+        #display.start()
+
+
         chrome_options = Options()
         exp_opt = {}
         chrome_options.add_argument("--disable-notifications")
@@ -28,9 +31,10 @@ class Browser():
         chrome_options.add_argument("--lang=en")
         user_agent = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36'
         chrome_options.add_argument('user-agent={}'.format(user_agent))
-        chrome_options.add_argument("--disable-javascript")
-        #chrome_options.add_experimental_option("prefs", {'profile.managed_default_content_settings.javascript': 2})
+        #chrome_options.add_argument("user-data-dir=smp_api/Profile 1")
+        #chrome_options.add_argument('--profile-directory=Profile 1')
 
+        #chrome_options.add_experimental_option("prefs", {'profile.managed_default_content_settings.javascript': 2})
 
         if ip:
             manifest_json = """
@@ -92,13 +96,25 @@ class Browser():
                 zp.writestr("background.js", background_js)
             chrome_options.add_extension(pluginfile)
 
-        self.driver = webdriver.Chrome('smp_api/chromedriver', chrome_options=chrome_options)
+        self.driver = webdriver.Chrome('/media/k/Media1/Sources/smp_api/smp_api/chromedriver', chrome_options=chrome_options)
 
     def get_page(self, url: str):
-        if url.find('https') == -1 and url.find('http') ==-1:
-            url = 'https://'+url
+        try:
+            if url.find('https') == -1 and url.find('http') ==-1:
+                url = 'https://'+url
+        except AttributeError:
+            pass
         try:
             self.driver.get(url)
         except WebDriverException:
             raise InvalidUrl(f"Can't access {url}")
         return self.driver.page_source
+
+    def quit(self):
+        self.driver.quit()
+
+    def get_title(self):
+        return self.driver.title
+
+    def __del__(self):
+        self.driver.quit()

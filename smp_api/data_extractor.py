@@ -7,11 +7,18 @@ import time
 import extruct
 from .facebook_handler import get_facebook_data
 from .ClearbitApi import get_logo
+from .Exceptions import WebSiteBlocked
 
 def get_page(url):
     browser = Browser()
     res = browser.get_page(url)
-    browser.driver.save_screenshot('1.png')
+#    browser.driver.save_screenshot('1.png')
+
+    BLOCKED_INDICATOR = ['Attemtion', 'Blocked', 'unauthorized', 'Locked', 'Unauthorised']
+    for word in BLOCKED_INDICATOR:
+        if browser.get_title().lower().find(word.lower()) != -1:
+            raise WebSiteBlocked
+    browser.quit()
     return res
 
 

@@ -4,8 +4,8 @@ from .data_extractor import get_data
 from .validators import validate_url
 from django.core.exceptions import ValidationError, MultipleObjectsReturned
 from django.db.models import ObjectDoesNotExist
-from .Exceptions import InvalidUrl, OldChache
-from .models import Cache, Twitter
+from .Exceptions import InvalidUrl, OldChache, WebSiteBlocked
+from .models import Cache, Twitter, Proxy
 import datetime
 import os
 import json
@@ -47,6 +47,18 @@ def get_twitter_keys():
 
 class UrlHandler(APIView):
     def get(self, request):
+        proxy_dict = {}
+        try:
+            fields = ['ip', 'port', 'login', 'password', 'is_fb', 'is_browser']
+            proxy = Proxy.objects.all()[0]
+            proxy_dict = {}
+            for field in fields:
+                proxy_dict[field] = proxy.__getattribute__(field)
+
+        except (ObjectDoesNotExist, AttributeError):
+            for field in fields:
+                proxy_dict[field] = None
+
         url = request.GET.get('domain')
         if not url:
             return Response({'error': 'Give URL'})
@@ -67,5 +79,7 @@ class UrlHandler(APIView):
                 add_chache(url, data)
             except InvalidUrl as e:
                 response['error'] = e.message
+            except WebSiteBlocked:
+                response['error'] = f'{url} is blocked'
         response['data'] = data
         return Response(response)

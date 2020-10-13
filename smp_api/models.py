@@ -20,3 +20,17 @@ class Twitter(Model):
 
     def __str__(self):
         return f'{self.name} - {self.access_token_key}'
+
+
+class Proxy(Model):
+    ip = CharField(max_length=400)
+    port = CharField(max_length=60)
+    login = CharField(max_length=150, blank=True)
+    password = CharField(max_length=150, blank=True)
+
+    is_fb = BooleanField(default=True)
+    is_browser = BooleanField(default=True)
+
+
+    def __str__(self):
+        return f'{self.ip}:{self.port}. For FB: {self.is_fb}; for browser: {self.is_browser}'

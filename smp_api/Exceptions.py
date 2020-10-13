@@ -5,3 +5,6 @@ class InvalidUrl(Exception):
 
 class OldChache(Exception):
     pass
+
+class WebSiteBlocked(Exception):
+    pass
