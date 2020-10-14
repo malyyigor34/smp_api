@@ -8,6 +8,8 @@ import extruct
 from .facebook_handler import get_facebook_data
 from .ClearbitApi import get_logo
 from .Exceptions import WebSiteBlocked
+import requests
+import os
 
 def get_page(url):
     browser = Browser()
@@ -39,7 +41,7 @@ def get_metadata(res):
 
 
 def get_data(url, twitters_keys):
-    page_source = get_page(url)
+    page_source = requests.get(f'https://api.scraperapi.com/?api_key={os.environ.get("SCRAPPER_API")}&url={url}').text
     metadata = get_metadata(page_source)
     try:
         metadata['page']['logo'] = extruct.extract(page_source).get('json-ld')[0].get('logo')
