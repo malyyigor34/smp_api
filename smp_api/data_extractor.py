@@ -11,11 +11,10 @@ from .Exceptions import WebSiteBlocked
 import requests
 import os
 
+
 def get_page(url):
     browser = Browser()
     res = browser.get_page(url)
-#    browser.driver.save_screenshot('1.png')
-
     BLOCKED_INDICATOR = ['Attemtion', 'Blocked', 'unauthorized', 'Locked', 'Unauthorised']
     for word in BLOCKED_INDICATOR:
         if browser.get_title().lower().find(word.lower()) != -1:
