@@ -89,7 +89,7 @@ class UrlHandler(APIView):
 class Test(APIView):
     def get(self, request):
         urls = TestUrl.objects.all()[0].urls.split('\n')
-        server = '45.144.179.200:800/'
+        server = 'http://45.144.179.200:800/'
         ress = []
         for url in urls:
             url = url.replace('\r', '')
