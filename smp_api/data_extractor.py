@@ -29,8 +29,11 @@ def get_links(res: str) -> dict:
     social_platforms_links = {}
     for link in find_links_tree(tree):
         for social_platform in social_platforms:
-            if link.find(social_platform) != -1:
-                social_platforms_links[social_platform] = link
+            try:
+                if link.find(social_platform) != -1:
+                    social_platforms_links[social_platform] = link
+            except AttributeError:
+                continue
     return social_platforms_links
 
 

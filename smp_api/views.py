@@ -94,5 +94,4 @@ class Test(APIView):
         for url in urls:
             url = url.replace('\r', '')
             ress.append({url: json.loads(requests.get(f'{server}?domain={url}').text)})
-            i += 1
         return Response(ress)
