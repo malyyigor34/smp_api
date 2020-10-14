@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Twitter, Cache, Proxy
+from .models import Twitter, Cache, Proxy, TestUrl
 
 
 class TwitterAdmin(admin.ModelAdmin):
@@ -12,6 +12,9 @@ class ChacheAdmin(admin.ModelAdmin):
 class ProxyAdmin(admin.ModelAdmin):
     pass
 
+class TestAdmin(admin.ModelAdmin):
+    pass
+
 admin.site.register(Twitter, TwitterAdmin)
 admin.site.register(Cache, ChacheAdmin)
-#admin.site.register(Proxy, ProxyAdmin)
+admin.site.register(TestUrl, TestAdmin)

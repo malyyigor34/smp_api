@@ -5,10 +5,11 @@ from .validators import validate_url
 from django.core.exceptions import ValidationError, MultipleObjectsReturned
 from django.db.models import ObjectDoesNotExist
 from .Exceptions import InvalidUrl, OldChache, WebSiteBlocked
-from .models import Cache, Twitter, Proxy
+from .models import Cache, Twitter, Proxy, TestUrl
 import datetime
 import os
 import json
+import requests
 
 
 def get_chache(url):
@@ -83,3 +84,15 @@ class UrlHandler(APIView):
                 response['error'] = f'{url} is blocked'
         response['data'] = data
         return Response(response)
+
+
+class Test(APIView):
+    def get(self, request):
+        urls = TestUrl.objects.all()[0].urls.split('\n')
+        server = '45.144.179.200:800/'
+        ress = []
+        for url in urls:
+            url = url.replace('\r', '')
+            ress.append({url: json.loads(requests.get(f'{server}?domain={url}').text)})
+            i += 1
+        return Response(ress)

@@ -22,6 +22,10 @@ class Twitter(Model):
         return f'{self.name} - {self.access_token_key}'
 
 
+class TestUrl(Model):
+    urls = TextField(max_length=25000)
+
+
 class Proxy(Model):
     ip = CharField(max_length=400)
     port = CharField(max_length=60)

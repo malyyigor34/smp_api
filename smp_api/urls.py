@@ -1,9 +1,10 @@
 from django.conf.urls import url
 from django.urls import path
 from django.contrib import admin
-from .views import UrlHandler
+from .views import UrlHandler, Test
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    path(r'', UrlHandler.as_view())
+    path(r'', UrlHandler.as_view()),
+    path('test/', Test.as_view())
 ]
