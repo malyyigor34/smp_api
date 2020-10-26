@@ -1,17 +1,17 @@
-import boto3
-from botocore.exceptions import ClientError
 import logging
 import os
-import requests
-import os
-import tempfile
 import random
+import tempfile
+
+import boto3
+import requests
+from botocore.exceptions import ClientError
 
 
 def upload_file(file_name, bucket, object_name=None):
     s3_client = boto3.client('s3',
-                               aws_access_key_id='AKIAJ4MQQBD35KLDSI5Q',
-                               aws_secret_access_key='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')
+                               aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
+                               aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY'))
 
 
     if object_name is None:
@@ -24,7 +24,7 @@ def upload_file(file_name, bucket, object_name=None):
     except ClientError as e:
         logging.error(e)
         return False
-    bucket_location = s3_client.get_bucket_location(Bucket='twitterimagies')
+    bucket_location = s3_client.get_bucket_location(Bucket=os.environ.get('BUCKET_NAME'))
 
     return f'https://s3.{bucket_location.get("LocationConstraint")}.amazonaws.com/{os.environ.get("BUCKET_NAME")}/{object_name}'
 

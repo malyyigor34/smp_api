@@ -1,10 +1,8 @@
 import os
-from .CONFIG import CONFIG
 
+from smp_api.utils.config.load_config import load_config
 
-for key, value in CONFIG.items():
-    os.environ.update({key: str(value)})
-
+load_config()
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '&1@+gt6bt+&je_)z8vn=zx0t=f56$g-=s2n5fpb7ii@i6)0csg'
 DEBUG = True

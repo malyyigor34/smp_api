@@ -1,9 +1,10 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options, DesiredCapabilities
-from selenium.common.exceptions import WebDriverException
-import os
 import zipfile
-from .Exceptions import InvalidUrl
+import os
+from selenium import webdriver
+from selenium.common.exceptions import WebDriverException
+from selenium.webdriver.chrome.options import Options
+
+from smp_api.Exceptions import InvalidUrl
 
 
 class Browser():
@@ -94,8 +95,12 @@ class Browser():
                 zp.writestr("manifest.json", manifest_json)
                 zp.writestr("background.js", background_js)
             chrome_options.add_extension(pluginfile)
+        print(os.path.realpath('chromedriver'))
+        self.driver = webdriver.Chrome(executable_path=os.path.realpath('chromedriver'), chrome_options=chrome_options)
 
-        self.driver = webdriver.Chrome('/media/k/Media1/Sources/smp_api/smp_api/chromedriver', chrome_options=chrome_options)
+    def get_page_from_file(self, url):
+        self.driver.get(url)
+        return self.driver.page_source
 
     def get_page(self, url: str):
         try:

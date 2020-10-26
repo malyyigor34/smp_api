@@ -1,9 +1,9 @@
-import requests
-from .AmazonBucket import upload_image
 import os
 
+from smp_api.utils.amazon_bucket import upload_image
 
-def get_logo(url):
+
+def get_logo_from_clearbit(url):
     url = url.replace('https://', '')
     url = url.replace('http://', '')
 
@@ -12,4 +12,4 @@ def get_logo(url):
 
 if __name__ == '__main__':
     os.environ.update({'BUCKET_NAME': 'twitterimagies'})
-    get_logo('www.publicdesire.com')
+    get_logo_from_clearbit('www.publicdesire.com')

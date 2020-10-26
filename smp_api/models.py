@@ -1,5 +1,6 @@
-from django.db.models import *
 from datetime import datetime
+
+from django.db.models import *
 
 
 class Cache(Model):
@@ -34,7 +35,6 @@ class Proxy(Model):
 
     is_fb = BooleanField(default=True)
     is_browser = BooleanField(default=True)
-
 
     def __str__(self):
         return f'{self.ip}:{self.port}. For FB: {self.is_fb}; for browser: {self.is_browser}'
