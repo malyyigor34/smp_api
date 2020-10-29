@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 
-from smp_api.utils.page_getters.browser import Browser
+from browser import Browser
 from smp_api.utils.data_extractor import DataExtractor
 
 
