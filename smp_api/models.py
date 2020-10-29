@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from django.db.models import *
-
+from django.utils.timezone import now
 
 class Cache(Model):
     domain = CharField(max_length=250)
@@ -21,6 +21,13 @@ class Twitter(Model):
 
     def __str__(self):
         return f'{self.name} - {self.access_token_key}'
+
+
+class Queue(Model):
+    locked = BooleanField(default=False)
+    url = CharField(max_length=580)
+    result = CharField(max_length=10000, default='')
+    date = DateTimeField(default=now())
 
 
 class TestUrl(Model):

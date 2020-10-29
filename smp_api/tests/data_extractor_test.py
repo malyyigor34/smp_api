@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 
-from smp_api.utils.config.load_config import load_config
+from smp_api.utils.config import load_config
 from smp_api.utils.data_extractor import DataExtractor
 
 

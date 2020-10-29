@@ -3,11 +3,10 @@ import os
 import requests
 from bs4 import BeautifulSoup
 
-from smp_api.Exceptions import ErrorAtGettingPage, BadConfigurated
+from smp_api.utils.Exceptions import ErrorAtGettingPage, BadConfigurated
 from smp_api.utils.common_modules.common import validate_url
-from smp_api.utils.config.load_config import load_config
+from smp_api.utils.config import load_config
 
-import json
 
 class PageGetter:
     def __init__(self):

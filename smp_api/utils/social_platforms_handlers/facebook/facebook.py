@@ -6,7 +6,8 @@ from smp_api.utils.amazon_bucket import upload_image
 from smp_api.utils.page_getters.browser import Browser
 from smp_api.utils.page_getters.page_getter import PageGetter
 from smp_api.utils.config.load_config import load_config
-import tempfile
+
+
 class Facebook():
     def __init__(self, via_browser=False):
         self._via_browser = via_browser
@@ -39,8 +40,8 @@ class Facebook():
 
         with open('tmp.html', 'w') as f:
             f.write(page_source)
-        page_source = browser.get_page_from_file('file:///'+os.path.realpath('tmp.html'))
-        time.sleep(1)
+        page_source = browser.get_page_from_file('file:///' + os.path.realpath('tmp.html'))
+        #time.sleep(1)
 
         soup = BeautifulSoup(page_source)
 
@@ -60,9 +61,11 @@ class Facebook():
         for elem in soup.find_all():
             if elem.attrs.get('aria-label') == 'Profile picture':
                 logo = elem.find('img').attrs.get('src')
-
-        page_source = page_getter.get_page(url.replace('facebook.com/', 'facebook.com/pg/') + 'about')
-        soup = BeautifulSoup(page_source)
+        try:
+            page_source = page_getter.get_page(url.replace('facebook.com/', 'facebook.com/pg/') + '/about')
+            soup = BeautifulSoup(page_source)
+        except Exception:
+            pass
 
 
         try:

@@ -1,6 +1,6 @@
 from validator_collection import checkers
 
-from smp_api.Exceptions import ValidationError
+from smp_api.utils.Exceptions import ValidationError
 
 
 def validate_url(url):

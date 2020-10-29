@@ -3,7 +3,7 @@ import metadata_parser
 from extract_social_media import find_links_tree
 from html_to_etree import parse_html_bytes
 
-from smp_api.Exceptions import WebSiteBlocked
+from smp_api.utils.Exceptions import WebSiteBlocked
 from smp_api.utils.external_api.clearbit import get_logo_from_clearbit
 from smp_api.utils.page_getters.browser import Browser
 from smp_api.utils.page_getters.page_getter import PageGetter

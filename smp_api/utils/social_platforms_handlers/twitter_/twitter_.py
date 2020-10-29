@@ -2,7 +2,7 @@ from twitter import Api
 from twitter.error import *
 
 from smp_api.utils.amazon_bucket import upload_image
-from smp_api.utils.config.load_config import load_config
+from smp_api.utils.config import load_config
 from smp_api.utils.social_platforms_handlers.twitter_.keys import TwitterKeys
 
 

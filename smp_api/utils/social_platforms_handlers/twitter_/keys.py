@@ -2,7 +2,7 @@ import os
 
 import requests
 
-from smp_api.utils.config.load_config import load_config
+from smp_api.utils.config import load_config
 
 
 class TwitterKeys():

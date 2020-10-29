@@ -4,7 +4,8 @@ from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.chrome.options import Options
 
-from smp_api.Exceptions import InvalidUrl
+from smp_api.utils.Exceptions import InvalidUrl
+
 
 
 class Browser():
@@ -95,7 +96,9 @@ class Browser():
                 zp.writestr("manifest.json", manifest_json)
                 zp.writestr("background.js", background_js)
             chrome_options.add_extension(pluginfile)
-        print(os.path.realpath('chromedriver'))
+        print(os.path.dirname(os.path.realpath(__file__)))
+
+        #print(os.path.realpath('chromedriver'))
         self.driver = webdriver.Chrome(executable_path=os.path.realpath('chromedriver'), chrome_options=chrome_options)
 
     def get_page_from_file(self, url):
@@ -107,11 +110,15 @@ class Browser():
             if url.find('https') == -1 and url.find('http') ==-1:
                 url = 'https://'+url
         except AttributeError:
-            pass
+            raise InvalidUrl('Url is incorrect')
         try:
             self.driver.get(url)
         except WebDriverException:
             raise InvalidUrl(f"Can't access {url}")
+        return self.driver.page_source
+
+    def open_page_from_string(self, page_source):
+        self.driver.get("data:text/html;charset=utf-8,{html_content}".format(html_content=page_source))
         return self.driver.page_source
 
     def quit(self):

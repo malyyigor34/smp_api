@@ -1,14 +1,8 @@
-import datetime
-import json
-import os
+from django.core.exceptions import ValidationError
 
-from django.core.exceptions import ValidationError, MultipleObjectsReturned
-from django.db.models import ObjectDoesNotExist
-
-from smp_api.Exceptions import *
-from smp_api.models import Cache
+from smp_api.utils.Exceptions import *
 from smp_api.utils.common_modules.common import validate_url
-from .data_extractor import DataExtractor
+from smp_api.utils.data_extractor import DataExtractor
 
 
 class DataExtractorManager:
@@ -19,10 +13,6 @@ class DataExtractorManager:
     def get(self):
         response = {'error': False}
         data = None
-        #try:
-        #    data = self._get_from_cache()
-        #    response['cached'] = True
-        #except OldChache:
         try:
             validate_url(self._url)
         except ValidationError as e:
@@ -30,7 +20,6 @@ class DataExtractorManager:
             return response
         try:
             data = self._data_extractor.extract(self._url)
-            self._add_cache(data)
         except InvalidUrl as e:
             response['error'] = e.message
         except WebSiteBlocked:
@@ -38,21 +27,23 @@ class DataExtractorManager:
         response['data'] = data
         return response
 
-    def _add_cache(self, data):
-        data = json.dumps(data)
-        Cache.objects.create(data=data, domain=self._url, date=datetime.datetime.now().timestamp())
 
-    def _get_from_cache(self):
-        try:
-            try:
-                response = Cache.objects.get(domain=self._url)
-            except MultipleObjectsReturned:
-                Cache.objects.all().delete()
-                raise OldChache
-            if datetime.datetime.now().timestamp() - response.date > float(os.environ.get('CACHE_LIFETIME')) * 60:
-                response.delete()
-                raise OldChache
-            else:
-                return json.loads(response.data)
-        except ObjectDoesNotExist:
-            raise OldChache
+
+    #def _add_cache(self, data):
+    #    data = json.dumps(data)
+    #    Cache.objects.create(data=data, domain=self._url, date=datetime.datetime.now().timestamp())
+
+    #def _get_from_cache(self):
+    #    try:
+    #        try:
+    #            response = Cache.objects.get(domain=self._url)
+    #        except MultipleObjectsReturned:
+    #            Cache.objects.all().delete()
+    #            raise OldChache
+    #        if datetime.datetime.now().timestamp() - response.date > float(os.environ.get('CACHE_LIFETIME')) * 60:
+    #            response.delete()
+    #            raise OldChache
+    #        else:
+    #            return json.loads(response.data)
+    #    except ObjectDoesNotExist:
+    #        raise OldChache
