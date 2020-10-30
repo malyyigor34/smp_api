@@ -18,9 +18,8 @@ CONFIG = {
 
     'TWITTER_KEYS_API_ENDPOINT': 'twitter_keys/',
     
-    'APP_URL': '127.0.0.1',
+    'APP_URL': 'ec2-54-217-1-67.eu-west-1.compute.amazonaws.com',
     'APP_PROTOCOL': 'http',
-    'APP_PORT': '8000',
     'APP_ROOT_USER': 'qwerty',
     'APP_ROOT_PASSWORD': 'qwerty',
 
