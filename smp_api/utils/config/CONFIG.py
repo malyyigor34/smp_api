@@ -22,6 +22,10 @@ CONFIG = {
     'APP_PROTOCOL': 'http',
     'APP_PORT': '8000',
     'APP_ROOT_USER': 'qwerty',
-    'APP_ROOT_PASSWORD': 'qwerty'
+    'APP_ROOT_PASSWORD': 'qwerty',
 
+    'ROTATING_PROXY_IP': '209.127.184.226',
+    'ROTATING_PROXY_PORT': '80',
+    'ROTATING_PROXY_LOGIN': 'svmwgbqi-rotate',
+    'ROTATING_PROXY_PASSWORD': 'rh0ik1uwsdh8'
 }

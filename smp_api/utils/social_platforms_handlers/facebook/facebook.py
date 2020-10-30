@@ -24,7 +24,7 @@ class Facebook():
         if self._via_browser:
             data = self._get_data_via_browser(url)
         else:
-            data = self._get_data_via_pg(url)
+            data = self._get_data_via_browser(url)
         return data
 
     def _get_data_via_pg(self, url):
@@ -38,10 +38,7 @@ class Facebook():
 
         browser = Browser()
 
-        with open('tmp.html', 'w') as f:
-            f.write(page_source)
-        page_source = browser.get_page_from_file('file:///' + os.path.realpath('tmp.html'))
-        #time.sleep(1)
+        page_source = browser.open_page_from_string(page_source)
 
         soup = BeautifulSoup(page_source)
 

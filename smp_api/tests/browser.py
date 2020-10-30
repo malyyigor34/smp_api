@@ -15,6 +15,13 @@ class Browser():
         #display = Display(visible=0, size=(1920, 1080))
         #display.start()
 
+        try:
+            ip = os.environ['ROTATING_PROXY_IP']
+            port = os.environ['ROTATING_PROXY_PORT']
+            login = os.environ['ROTATING_PROXY_LOGIN']
+            password = os.environ['ROTATING_PROXY_PASSWORD']
+        except KeyError:
+            print('Error at getting proxy from CONFIG.py')
 
         chrome_options = Options()
         exp_opt = {}
