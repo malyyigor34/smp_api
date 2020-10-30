@@ -2,8 +2,8 @@ import unittest
 from unittest.mock import patch
 
 from browser import Browser
-from smp_api.utils.data_extractor import DataExtractor
-from smp_api.utils.config.load_config import load_config
+from load_config import load_config
+
 
 class BrowserTest(unittest.TestCase):
     def setUp(self) -> None:
