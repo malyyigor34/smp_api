@@ -9,7 +9,7 @@ from .models import TestUrl, Twitter
 from .serializers import TwitterSerializer
 from django.views.decorators.cache import cache_page
 from django.utils.decorators import method_decorator
-from smp_api.utils.data_extractor_manager import DataExtractorManager
+from smp_api.data_extractor_manager import DataExtractorManager
 
 class UrlHandler(APIView):
     @method_decorator(cache_page(60 * 60 * 50))

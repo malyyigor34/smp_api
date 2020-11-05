@@ -1,6 +1,6 @@
 import os
 
-from smp_api.utils.config.load_config import load_config
+from smp_api.load_config import load_config
 
 load_config()
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

@@ -4,7 +4,7 @@ from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.chrome.options import Options
 
-from smp_api.utils.Exceptions import InvalidUrl
+from smp_api.Exceptions import InvalidUrl
 
 
 
